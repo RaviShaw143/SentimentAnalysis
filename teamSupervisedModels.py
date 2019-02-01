@@ -172,7 +172,7 @@ train_X_textSW, test_X_textSW, train_Y_textSW, test_Y_textSW = splitDataAfterPCA
 train_X_Audtext, test_X_Audtext, train_Y_Audtext, test_Y_Audtext = splitDataAfterPCA(inputAudioTextFeat, output)
 train_X_AudtextSW, test_X_AudtextSW, train_Y_AudtextSW, test_Y_AudtextSW = splitDataAfterPCA(inputAudioTextSWFeat, output)
 
-def reportResults(feature):
+def reportSupervisedModelsResults(feature):
     
     if feature == "audio":
         getSupervisedModelResults(train_X_Aud, test_X_Aud, train_Y_Aud, test_Y_Aud)

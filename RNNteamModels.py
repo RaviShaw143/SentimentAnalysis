@@ -293,19 +293,6 @@ def LSTModelAudTextSW(trainX, trainY, valX, valY, testX, testY):
     print('Test score:', score)
     print('Test accuracy:', acc)    
 
-
-def reportSupervisedModelsResults(feature):
-    
-    if feature == "audio":
-        getSupervisedModelResults(train_X_Aud, test_X_Aud, train_Y_Aud, test_Y_Aud)
-    if feature == "text":
-        getSupervisedModelResults(train_X_text, test_X_text, train_Y_text, test_Y_text)
-    if feature == "textSW":
-        getSupervisedModelResults(train_X_textSW, test_X_textSW, train_Y_textSW, test_Y_textSW)
-    if feature == "audioText":
-        getSupervisedModelResults(train_X_Audtext, test_X_Audtext, train_Y_Audtext, test_Y_Audtext)
-    if feature == "audioTextSW":
-        getSupervisedModelResults(train_X_AudtextSW, test_X_AudtextSW, train_Y_AudtextSW, test_Y_AudtextSW)
 		
 def reportRNNResults():
     #trains and test the model using audio features 
