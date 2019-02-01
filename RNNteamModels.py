@@ -294,14 +294,52 @@ def LSTModelAudTextSW(trainX, trainY, valX, valY, testX, testY):
     print('Test accuracy:', acc)    
 
 
-featureFilesDirectory = os.path.abspath(os.path.join("Desktop", "Code", "FinalAudioAndTextFiles", "TEAMDataset","CsvFiles"))
+def reportSupervisedModelsResults(feature):
+    
+    if feature == "audio":
+        getSupervisedModelResults(train_X_Aud, test_X_Aud, train_Y_Aud, test_Y_Aud)
+    if feature == "text":
+        getSupervisedModelResults(train_X_text, test_X_text, train_Y_text, test_Y_text)
+    if feature == "textSW":
+        getSupervisedModelResults(train_X_textSW, test_X_textSW, train_Y_textSW, test_Y_textSW)
+    if feature == "audioText":
+        getSupervisedModelResults(train_X_Audtext, test_X_Audtext, train_Y_Audtext, test_Y_Audtext)
+    if feature == "audioTextSW":
+        getSupervisedModelResults(train_X_AudtextSW, test_X_AudtextSW, train_Y_AudtextSW, test_Y_AudtextSW)
+		
+def reportRNNResults():
+    #trains and test the model using audio features 
+    print("Audio Model results:") 
+    LSTModelAud(trainX_Audio, trainY_Audio, valX_Audio, valY_Audio, testX_Audio, testY_Audio)
+    print (trainX_Audio.shape)    
+    
+    #trains and test the model using only text Fetaures
+    print("Text Model results:")
+    LSTModelText(trainX_Text, trainY_Text,  valX_Text, valY_Text, testX_Text, testY_Text)
+    print (trainX_Text.shape)    
 
-#path to the audio and text features
-teamAudioFeat = os.path.abspath(os.path.join(featureFilesDirectory,"TEAMAudio_Features.csv"))
-teamTextFeat = os.path.abspath(os.path.join(featureFilesDirectory,"TEAMTextFeatures.csv"))
-teamTextSWFeat = os.path.abspath(os.path.join(featureFilesDirectory,"TEAMSWTextFeatures.csv"))
-teamAudioText = os.path.abspath(os.path.join(featureFilesDirectory,"audioTextFeat1.csv"))
-teamAudioTextSW = os.path.abspath(os.path.join(featureFilesDirectory,"audioTextSWFeat.csv"))
+    #trains and test the model using text SW features only
+    print("Text SW Model results:")
+    LSTModelTextSW(trainX_TextSW,  trainY_TextSW, valX_TextSW, valY_TextSW, testX_TextSW, testY_TextSW)
+    print (trainX_TextSW.shape)    
+    
+    #trains and test the model using audio and text features 
+    print("Audio and Text Model results:")
+    LSTModelAudText(trainX_AT, trainY_AT, valX_AT,  valY_AT, testX_AT, testY_AT)
+    print (trainX_AT.shape)    
+    
+    #trains and test the model using audio and text SW features
+    print("Audio and Text SW Model results:")
+    LSTModelAudTextSW(trainX_ATSW, trainY_ATSW, valX_ATSW,  valY_ATSW, testX_ATSW, testY_ATSW)
+    print (trainX_ATSW.shape)    
+
+
+featureFilesDirectory = './TEAMDataset/CsvFiles'
+teamAudioFeat = os.path.join(featureFilesDirectory,"TEAMAudio_Features.csv")
+teamTextFeat = os.path.join(featureFilesDirectory,"TEAMTextFeatures.csv")
+teamTextSWFeat = os.path.join(featureFilesDirectory,"TEAMSWTextFeatures.csv")
+teamAudioText = os.path.join(featureFilesDirectory,"audioTextFeat1.csv")
+teamAudioTextSW =os.path.join(featureFilesDirectory,"audioTextSWFeat.csv")
 
 
 audioFeat = pd.read_csv(teamAudioFeat)
@@ -336,7 +374,6 @@ train_X_textSW, test_X_textSW, train_Y_textSW, test_Y_textSW = splitDataAfterPCA
 train_X_Audtext, test_X_Audtext, train_Y_Audtext, test_Y_Audtext = splitDataAfterPCA(inputAudioTextFeat, output)
 train_X_AudtextSW, test_X_AudtextSW, train_Y_AudtextSW, test_Y_AudtextSW = splitDataAfterPCA(inputAudioTextSWFeat, output)
 
-
 #dividing the features training data into further train and validation set
 trainX_Audio, trainY_Audio, valX_Audio, valY_Audio, testX_Audio, testY_Audio  = getDataForLSTM(train_X_Aud, train_Y_Aud, test_X_Aud, test_Y_Aud )
 trainX_Text, trainY_Text,  valX_Text, valY_Text, testX_Text, testY_Text  = getDataForLSTM(train_X_text, train_Y_text, test_X_text, test_Y_text)
@@ -344,25 +381,13 @@ trainX_TextSW,  trainY_TextSW, valX_TextSW, valY_TextSW, testX_TextSW, testY_Tex
 trainX_AT, trainY_AT, valX_AT,  valY_AT, testX_AT, testY_AT  = getDataForLSTM(train_X_Audtext, train_Y_Audtext, test_X_Audtext, test_Y_Audtext)
 trainX_ATSW, trainY_ATSW, valX_ATSW,  valY_ATSW, testX_ATSW, testY_ATSW  = getDataForLSTM(train_X_AudtextSW, train_Y_AudtextSW, test_X_AudtextSW, test_Y_AudtextSW)
 
+print("LSTM audio Text shapes:")
+print (trainX_Audio.shape)
+print (trainX_Text.shape)
+print (trainX_TextSW.shape)
+print (trainX_AT.shape)
+print (trainX_ATSW.shape)
 
-#trains and test the model using audio features 
-print("Audio Model results:")
+#reportRNNResults()
 
-LSTModelAud(trainX_Audio, trainY_Audio, valX_Audio, valY_Audio, testX_Audio, testY_Audio)
-
-#trains and test the model using only text Fetaures
-print("Text Model results:")
-LSTModelText(trainX_Text, trainY_Text,  valX_Text, valY_Text, testX_Text, testY_Text)
-
-#trains and test the model using text SW features only
-print("Text SW Model results:")
-LSTModelTextSW(trainX_TextSW,  trainY_TextSW, valX_TextSW, valY_TextSW, testX_TextSW, testY_TextSW)
-
-#trains and test the model using audio and text features 
-print("Audio and Text Model results:")
-LSTModelAudText(trainX_AT, trainY_AT, valX_AT,  valY_AT, testX_AT, testY_AT)
-
-#trains and test the model using audio and text SW features
-print("Audio and Text SW Model results:")
-LSTModelAudTextSW(trainX_ATSW, trainY_ATSW, valX_ATSW,  valY_ATSW, testX_ATSW, testY_ATSW)
-
+		
