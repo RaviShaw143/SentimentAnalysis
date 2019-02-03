@@ -90,7 +90,7 @@ def LSTModelAudText(trainX, trainY, valX, valY, testX, testY):
     
 
 
-featureFilesDirectory = os.path.join(os.getcwd(),"RNN")
+featureFilesDirectory = os.path.join(os.getcwd(),"SentimentAnalysis")
 teamAudioText = os.path.join(featureFilesDirectory,"audioTextSWFeat.csv")
 audioTextFeat = pd.read_csv(teamAudioText)
 inputAudioTextFeat = audioTextFeat.loc[:, audioTextFeat.columns != 'sentiment']
